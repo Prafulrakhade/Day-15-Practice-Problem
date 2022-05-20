@@ -11,6 +11,7 @@ namespace BSTAndHashTable
         private readonly int size;
         private readonly LinkedList<KeyValue<K, V>>[] items;
 
+        //Constructor 
         public MyMapNode(int size)
         {
             this.size = size;
@@ -23,6 +24,7 @@ namespace BSTAndHashTable
             return Math.Abs(position);
         }
 
+        //get the key value 
         public V Get(K key)
         {
             int position = GetArrayPosition(key);
@@ -37,6 +39,7 @@ namespace BSTAndHashTable
             return default(V);
         }
 
+        //For add
         public void Add(K key, V value)
         {
             int position = GetArrayPosition((K)key);
@@ -46,6 +49,27 @@ namespace BSTAndHashTable
         }
 
 
+        //Remove
+        public void Remove(K key)
+        {
+            int position = GetArrayPosition((K)key);
+            LinkedList<KeyValue<K, V>> linkedList = GetLinkedList(position);
+            bool itemfound = false;
+            KeyValue<K, V> foundItem = default(KeyValue<K, V>);
+            foreach (KeyValue<K, V> item in linkedList)
+            {
+                if (item.Key.Equals(key))
+                {
+                    itemfound = true;
+                    foundItem = item;
+                }
+            }
+
+            if (itemfound)
+            {
+                linkedList.Remove(foundItem);
+            }
+        }
         protected LinkedList<KeyValue<K, V>> GetLinkedList(int position)
         {
             LinkedList<KeyValue<K, V>> linkedList = items[position];
@@ -60,6 +84,7 @@ namespace BSTAndHashTable
 
     }
 
+    //Struct class
     public struct KeyValue<K, V>
     {
         public K Key { get; set; }
